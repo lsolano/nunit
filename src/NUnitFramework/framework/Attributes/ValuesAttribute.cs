@@ -106,11 +106,15 @@ namespace NUnit.Framework
             {
                 return Enum.GetValues(targetType);
             }
-            if (targetType == typeof(bool?))
+            
+            bool isNullableBoolean = targetType == typeof(bool?) || (targetType.HasElementType && targetType.GetElementType() == typeof(bool?));
+            if (isNullableBoolean)
             {
                 return new object?[] { null, true, false };
             }
-            if (targetType == typeof(bool))
+
+            bool isBoolean = targetType == typeof(bool) || (targetType.HasElementType && targetType.GetElementType() == typeof(bool)); 
+            if (isBoolean)
             {
                 return new object[] { true, false };
             }
